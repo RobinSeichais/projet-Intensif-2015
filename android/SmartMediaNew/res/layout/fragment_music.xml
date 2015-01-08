@@ -15,6 +15,12 @@
         android:layout_alignParentTop="true"
         android:layout_above="@+id/footer" >
     </ListView>
+    
+    <View 
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        android:layout_above="@+id/footer"/>
 
     <RelativeLayout
         android:id="@+id/footer"
@@ -30,6 +36,7 @@
             android:id="@+id/play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="18dp"
@@ -48,6 +55,7 @@
             android:id="@+id/stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="18dp"

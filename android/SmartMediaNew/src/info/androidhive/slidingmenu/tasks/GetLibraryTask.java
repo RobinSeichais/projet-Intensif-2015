@@ -20,11 +20,11 @@ public class GetLibraryTask extends AsyncTask<String, Void, JSONObject> {
 		client.setConnectionTimeout(2000);
 		client.setSoTimeout(2000);
 		try {
-			JSONObject o = client.callJSONObject("getaudio",btName);
+			JSONObject o = client.callJSONObject("getmedia",btName);
 			Log.d("JSONRPC communication", "Result of getaudio : " + o);
 			return o;
 		} catch (JSONRPCException e) {
-			Log.e("JSONRPC communication", "Error in GetLibraryTask");
+			Log.e("JSONRPC communication", "Error in GetLibraryTask : " + e.getMessage());
 		}
 
 		return null;

@@ -1,7 +1,6 @@
 package info.androidhive.slidingmenu.tasks;
 
-import info.androidhive.slidingmenu.fragments.MusicFragment;
-
+import info.androidhive.slidingmenu.fragments.ConnectFragment;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -68,7 +67,7 @@ public class BTScanTask extends AsyncTask<String, Void, Void> {
 	                			lowestDevice = dev.getKey();
 	                		}
 	                	}
-	                	MusicFragment.btName = lowestDevice;
+	                	ConnectFragment.btName = lowestDevice;
 	                    dialog.dismiss();
 	                	mainContext.unregisterReceiver(blueToothReceiver);
 	                    Toast.makeText(mainContext, "Finished with the discovery! The closest device is " + lowestDevice, Toast.LENGTH_LONG).show();

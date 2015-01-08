@@ -22,7 +22,7 @@ public class PlayPauseTask extends AsyncTask<String, Void, Void> {
 			Object o = client.call("playpause");
 			Log.d("JSONRPC communication", "Result of playpause : " + o);
 		} catch (JSONRPCException e) {
-			Log.e("JSONRPC communication", "Error in PlayPauseTask");
+			Log.e("JSONRPC communication", "Error in PlayPauseTask : " + e.getMessage());
 		}
 
 		return null;

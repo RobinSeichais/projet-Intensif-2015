@@ -25,7 +25,7 @@ public class PlayTask extends AsyncTask<String, Void, Void> {
 			Log.d("JSONRPC communication", "Play command result : " + o);
 			return null;
 		} catch (JSONRPCException e) {
-			Log.e("JSONRPC communication", "Error in PlayTask");
+			Log.e("JSONRPC communication", "Error in PlayTask : " + e.getMessage());
 		}
 
 		return null;

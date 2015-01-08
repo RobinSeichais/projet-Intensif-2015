@@ -1,5 +1,6 @@
 package info.androidhive.slidingmenu.tasks;
 
+import info.androidhive.slidingmenu.fragments.ConnectFragment;
 import info.androidhive.slidingmenu.fragments.MusicFragment;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -21,9 +22,7 @@ public class ContiniousScanTask extends AsyncTask<String, Void, Void> {
 	private boolean tick;
     private Context mainContext; 
 	private MusicFragment musicFragment;
-    private BluetoothAdapter adapter; 
-    
-    private String btName;
+    private BluetoothAdapter adapter;
 
     private boolean continu = true;
     
@@ -44,8 +43,8 @@ public class ContiniousScanTask extends AsyncTask<String, Void, Void> {
 				String name = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
 
 				Log.d("response SM", "DEVICE NAME = " + name);
-				Log.d("response SM", "DEFAULT DEVICE NAME = " + btName);
-				if(name != null && name.equals(btName)) {
+				Log.d("response SM", "DEFAULT DEVICE NAME = " + ConnectFragment.btName);
+				if(name != null && name.equals(ConnectFragment.btName)) {
 
 					Log.d("response SM", "WALID FOUNDED");
 					Log.d("response POWER", "NEW POWER : " + rssi);
@@ -82,9 +81,8 @@ public class ContiniousScanTask extends AsyncTask<String, Void, Void> {
 		this.continu = false;
 	}
 
-    public ContiniousScanTask(Context context, String btName, MusicFragment musicFragment) {
+    public ContiniousScanTask(Context context, MusicFragment musicFragment) {
     	this.musicFragment = musicFragment;
-    	this.btName = btName;
         mainContext = context; 
         adapter = BluetoothAdapter.getDefaultAdapter();
         Log.d("Continious Scan", "Entering in constructor");
