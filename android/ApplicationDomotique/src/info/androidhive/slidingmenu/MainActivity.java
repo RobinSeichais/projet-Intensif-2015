@@ -19,6 +19,7 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -71,12 +72,14 @@ public class MainActivity extends Activity {
 
 		// adding nav drawer items to array
 		// Home
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons
+				.getResourceId(0, -1)));
 		// Find People
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons
+				.getResourceId(1, -1)));
 		// Photos
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons
+				.getResourceId(2, -1)));
 
 		// Recycle the typed array
 		navMenuIcons.recycle();
@@ -93,10 +96,12 @@ public class MainActivity extends Activity {
 		getActionBar().setHomeButtonEnabled(true);
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.ic_drawer, //nav menu toggle icon
-				R.string.app_name, // nav drawer open - description for accessibility
-				R.string.app_name // nav drawer close - description for accessibility
-				) {
+				R.drawable.ic_drawer, // nav menu toggle icon
+				R.string.app_name, // nav drawer open - description for
+									// accessibility
+				R.string.app_name // nav drawer close - description for
+									// accessibility
+		) {
 			public void onDrawerClosed(View view) {
 				getActionBar().setTitle(mTitle);
 				// calling onPrepareOptionsMenu() to show action bar icons
@@ -116,7 +121,8 @@ public class MainActivity extends Activity {
 			displayView(0);
 		}
 		ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		NetworkInfo mWifi = connManager
+				.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
 		// Do whatever
 		if (!mWifi.isConnected()) {
@@ -124,11 +130,9 @@ public class MainActivity extends Activity {
 			pd.setTitle("WiFi");
 			pd.setMessage("You must be connected to a WiFi Network");
 			pd.setCancelable(false);
-			pd.setPositiveButton("Quit",
-					new DialogInterface.OnClickListener() {
+			pd.setPositiveButton("Quit", new DialogInterface.OnClickListener() {
 				@Override
-				public void onClick(DialogInterface dialog,
-						int which) {
+				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
 					finish();
 				}
@@ -137,13 +141,13 @@ public class MainActivity extends Activity {
 			alertDialog.show();
 		}
 
-
 	}
+
 	/**
 	 * Slide menu item click listener
 	 * */
 	private class SlideMenuClickListener implements
-	ListView.OnItemClickListener {
+			ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
@@ -151,13 +155,7 @@ public class MainActivity extends Activity {
 			displayView(position);
 		}
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// toggle nav drawer on selecting action bar app icon/title
@@ -173,46 +171,37 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	/* *
-	 * Called when invalidateOptionsMenu() is triggered
-	 */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// if nav drawer is opened, hide the action items
-		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
-		return super.onPrepareOptionsMenu(menu);
-	}
-
 	/**
 	 * Diplaying fragment view for selected nav drawer list item
 	 * */
 	private void displayView(int position) {
 		// update the main content by replacing fragments
 		Fragment fragment = null;
-		Log.d("devBT",""+devices.size());
-		//if(!detected)
-		//fragment = new ConnectFragment();
-		switch (position) {
-		case 0:
-			fragment = new MusicFragment();
-			break;
-		case 1:
-			fragment = new VideosFragment();
-			break;
-		case 2:
-			fragment = new PhotosFragment();
-			break;
-
-		default:
-			break;
+		Log.d("devBT", "" + devices.size());
+		if(!detected) {
+			fragment = new ConnectFragment();
 		}
-
-
+		else {
+			switch (position) {
+			case 0:
+				fragment = new MusicFragment();
+				break;
+			case 1:
+				fragment = new VideosFragment();
+				break;
+			case 2:
+				fragment = new PhotosFragment();
+				break;
+	
+			default:
+				break;
+			}
+		}
+		
 		if (fragment != null) {
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
-			.replace(R.id.frame_container, fragment).commit();
+					.replace(R.id.frame_container, fragment).commit();
 
 			// update selected item and title, then close the drawer
 			mDrawerList.setItemChecked(position, true);
@@ -249,5 +238,4 @@ public class MainActivity extends Activity {
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
-
 }
