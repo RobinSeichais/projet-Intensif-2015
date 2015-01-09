@@ -1,0 +1,4 @@
+Liste des taches
+Logiciel développé (APK+Source serveur python)
+Code source (Projet android, code serveur python)
+Documentation
