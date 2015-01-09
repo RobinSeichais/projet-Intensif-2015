@@ -1,6 +1,8 @@
 package info.androidhive.slidingmenu.tasks;
 
+import info.androidhive.slidingmenu.MainActivity;
 import info.androidhive.slidingmenu.fragments.ConnectFragment;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -51,10 +53,10 @@ public class BTScanTask extends AsyncTask<String, Void, Void> {
                 if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                     BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                     Short rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, (short) 0);
-                    if(!devices.containsKey(device.getName())) {
-                        devices.put(device.getName(), rssi);	
+                    if(device.getName() != null && MainActivity.allowedDevices.contains(device.getName()) && !devices.containsKey(device.getName())) {
+                        devices.put(device.getName(), rssi);
+                        Log.d("BTScanTask","Device founded : " + device.getName() + ", with power : " + rssi);	
                     }
-                    Log.d("BTScanTask","Device founded : " + device.getName());
                 }
                 else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 	if(!devices.isEmpty()) {

@@ -8,6 +8,8 @@ import info.androidhive.slidingmenu.model.NavDrawerItem;
 import info.androidhive.slidingmenu.tasks.BTScanTask;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -31,6 +33,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class MainActivity extends Activity {
+	
+	public static final String RASPI_ADDRESS = "http://192.168.43.143:50420";
+	
+	public static Set<String> allowedDevices = new HashSet<String>();
+	 
+	static {
+		allowedDevices.add("RobinS");
+		//allowedDevices.add("REMI-PC");
+		allowedDevices.add("SPEINFO-THINK2");
+		//allowedDevices.add("Walid");
+	}
+	
 	public static DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;

@@ -8,11 +8,11 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class GetLibraryTask extends AsyncTask<String, Void, JSONObject> {
+public class GetMedia extends AsyncTask<String, Void, JSONObject> {
 
 	@Override
 	protected JSONObject doInBackground(String... urls) {
-		Log.d("JSONRPC communication", "Entering in GetLibraryTask");
+		Log.d("JSONRPC communication", "Entering in GetMedia");
 		String url = urls[0];
 		String btName = urls[1];
 		JSONRPCClient client = JSONRPCClient.create(url,
@@ -20,11 +20,11 @@ public class GetLibraryTask extends AsyncTask<String, Void, JSONObject> {
 		client.setConnectionTimeout(2000);
 		client.setSoTimeout(2000);
 		try {
-			JSONObject o = client.callJSONObject("getmedia",btName);
-			Log.d("JSONRPC communication", "Result of getaudio : " + o);
+			JSONObject o = client.callJSONObject("getaudio",btName);
+			Log.d("JSONRPC communication", "Result of GetMedia : " + o);
 			return o;
 		} catch (JSONRPCException e) {
-			Log.e("JSONRPC communication", "Error in GetLibraryTask : " + e.getMessage());
+			Log.e("JSONRPC communication", "Error in GetMedia : " + e.getMessage());
 		}
 
 		return null;

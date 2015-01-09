@@ -1,5 +1,6 @@
 package info.androidhive.slidingmenu.fragments;
 
+import info.androidhive.slidingmenu.MainActivity;
 import info.androidhive.slidingmenu.R;
 import info.androidhive.slidingmenu.tasks.ContiniousScanTask;
 import info.androidhive.slidingmenu.tasks.PlayPauseTask;
@@ -49,6 +50,10 @@ public class MusicFragment extends Fragment {
 		}
 	}
 	
+	public boolean isPaused() {
+		return !this.isPlaying;
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -67,8 +72,8 @@ public class MusicFragment extends Fragment {
 					return;
 				}
 				Log.d("Music Fragment", "Clicking on start/pause");
-				new PlayPauseTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://192.168.43.143:50420");
-				//new PlayPauseTask().execute("http://192.168.43.143:50420");
+				new PlayPauseTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, MainActivity.RASPI_ADDRESS);
+				//new PlayPauseTask().execute(MainActivity.RASPI_ADDRESS);
 				clickOnPauseStart();
 			}
 		});
@@ -81,10 +86,11 @@ public class MusicFragment extends Fragment {
 				}
 				
 				Log.d("Music Fragment", "Clicking on stop");
-				new StopTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://192.168.43.143:50420");
-				//new StopTask().execute("http://192.168.43.143:50420");
+				new StopTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, MainActivity.RASPI_ADDRESS);
+				//new StopTask().execute(MainActivity.RASPI_ADDRESS);
 				isPlaying = false;
 				elementSelected = false;
+				songName.setText("");
 				playBtn.setBackgroundResource(R.drawable.ic_play);
 				contScanTask.stop();
 			}
@@ -103,8 +109,8 @@ public class MusicFragment extends Fragment {
 				songName.setText(ConnectFragment.audios.getListChansons().get(position));
 				int idElt = ConnectFragment.audios.getListId().get(position);
 				String artiste = ConnectFragment.audios.getListArtistes().get(position);
-				new PlayTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://192.168.43.143:50420",artiste,""+idElt);
-				//new PlayTask().execute("http://192.168.43.143:50420",artiste,""+idElt);
+				new PlayTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, MainActivity.RASPI_ADDRESS,artiste,""+idElt);
+				//new PlayTask().execute(MainActivity.RASPI_ADDRESS,artiste,""+idElt);
 				contScanTask = new ContiniousScanTask(getActivity(), MusicFragment.this);
 				contScanTask.execute();
 			}

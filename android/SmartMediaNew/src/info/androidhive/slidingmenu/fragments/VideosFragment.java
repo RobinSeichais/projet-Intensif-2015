@@ -1,5 +1,6 @@
 package info.androidhive.slidingmenu.fragments;
 
+import info.androidhive.slidingmenu.MainActivity;
 import info.androidhive.slidingmenu.R;
 import info.androidhive.slidingmenu.tasks.ContiniousScanTask;
 import info.androidhive.slidingmenu.tasks.PlayPauseTask;
@@ -62,8 +63,8 @@ public class VideosFragment extends Fragment {
 		playBtn.setOnClickListener(new OnClickListener(){
 			public void onClick(View v) {
 				Log.d("Video Fragment", "Clicking on start/pause");
-				new PlayPauseTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://192.168.43.143:50420");
-				//new PlayPauseTask().execute("http://192.168.43.143:50420");
+				new PlayPauseTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, MainActivity.RASPI_ADDRESS);
+				//new PlayPauseTask().execute(MainActivity.RASPI_ADDRESS);
 				clickOnPauseStart();
 			}
 		});
@@ -71,8 +72,8 @@ public class VideosFragment extends Fragment {
 		stopBtn.setOnClickListener(new OnClickListener(){
 			public void onClick(View v) {
 				Log.d("Video Fragment", "Clicking on stop");
-				new StopTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://192.168.43.143:50420");
-				//new StopTask().execute("http://192.168.43.143:50420");
+				new StopTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, MainActivity.RASPI_ADDRESS);
+				//new StopTask().execute(MainActivity.RASPI_ADDRESS);
 				isPlaying = false;
 				playBtn.setBackgroundResource(R.drawable.ic_play);
 				contScanTask.stop();
@@ -90,8 +91,8 @@ public class VideosFragment extends Fragment {
 				playBtn.setBackgroundResource(R.drawable.ic_pause);
 				videoName.setText(ConnectFragment.videos.getListTitles().get(position));
 				int idElt = ConnectFragment.videos.getListIds().get(position);
-				//new PlayTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://192.168.43.143:50420",artiste,""+idElt);
-				//new PlayTask().execute("http://192.168.43.143:50420",artiste,""+idElt);
+				//new PlayTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, MainActivity.RASPI_ADDRESS,artiste,""+idElt);
+				//new PlayTask().execute(MainActivity.RASPI_ADDRESS,artiste,""+idElt);
 				//contScanTask = new ContiniousScanTask(getActivity(), MusicFragment.this);
 				//contScanTask.execute();
 			}

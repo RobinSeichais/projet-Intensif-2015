@@ -11,7 +11,7 @@ import info.androidhive.slidingmenu.MainActivity;
 import info.androidhive.slidingmenu.R;
 import info.androidhive.slidingmenu.model.Audios;
 import info.androidhive.slidingmenu.model.Videos;
-import info.androidhive.slidingmenu.tasks.GetLibraryTask;
+import info.androidhive.slidingmenu.tasks.GetMedia;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -48,8 +48,8 @@ public class ConnectFragment extends Fragment {
 				((MainActivity) getActivity()).connected = true;
 				
 				try {
-					GetLibraryTask o = new GetLibraryTask();
-					o.execute("http://192.168.43.143:50420",btName);
+					GetMedia o = new GetMedia();
+					o.execute(MainActivity.RASPI_ADDRESS,btName);
 					Log.d("Music Fragment","Choosen Bluetooth Device name  : " + btName);
 					JSONObject donnees = o.get();
 					if(donnees == null){
@@ -89,7 +89,7 @@ public class ConnectFragment extends Fragment {
 		return rootView;
 	}
 	
-
+	
 
 	public void extraireDonnees(JSONObject jsonResultat) {
 		try {
@@ -114,16 +114,16 @@ public class ConnectFragment extends Fragment {
 			
 			audios = new Audios(listChansons, listArtistes, listId);
 
-			JSONArray videoJSONObj = (JSONArray) jsonResultat.getJSONArray("video");
-			for (int i = 0; i < videoJSONObj.length(); i++) {
-				JSONObject video = videoJSONObj.getJSONObject(i);
-				String titre = video.getString("title");
-				int id = video.getInt("id");
-				listVideoTitles.add(titre);
-				listVideoIds.add(id);
-			}
-			
-			videos = new Videos(listVideoTitles, listVideoIds);
+//			JSONArray videoJSONObj = (JSONArray) jsonResultat.getJSONArray("video");
+//			for (int i = 0; i < videoJSONObj.length(); i++) {
+//				JSONObject video = videoJSONObj.getJSONObject(i);
+//				String titre = video.getString("title");
+//				int id = video.getInt("id");
+//				listVideoTitles.add(titre);
+//				listVideoIds.add(id);
+//			}
+//			
+//			videos = new Videos(listVideoTitles, listVideoIds);
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
