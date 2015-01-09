@@ -26,7 +26,7 @@ public class MusicFragment extends Fragment {
 
 	private ListView tagslistview;
 	private ImageButton playBtn = null;
-	private boolean isPlaying = false;
+	public static boolean isPlaying = false;
 	private ContiniousScanTask contScanTask;
 	
 	private boolean elementSelected = false;
@@ -51,7 +51,7 @@ public class MusicFragment extends Fragment {
 	}
 	
 	public boolean isPaused() {
-		return !this.isPlaying;
+		return !isPlaying;
 	}
 	
 	@Override
@@ -73,7 +73,14 @@ public class MusicFragment extends Fragment {
 				}
 				Log.d("Music Fragment", "Clicking on start/pause");
 				new PlayPauseTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, MainActivity.RASPI_ADDRESS);
-				//new PlayPauseTask().execute(MainActivity.RASPI_ADDRESS);
+				if(isPlaying) {
+					if(contScanTask != null) {
+						contScanTask.stop();
+					}
+				} else {
+					contScanTask = new ContiniousScanTask(getActivity(), MusicFragment.this);
+					contScanTask.execute();
+				}
 				clickOnPauseStart();
 			}
 		});
@@ -87,12 +94,13 @@ public class MusicFragment extends Fragment {
 				
 				Log.d("Music Fragment", "Clicking on stop");
 				new StopTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, MainActivity.RASPI_ADDRESS);
-				//new StopTask().execute(MainActivity.RASPI_ADDRESS);
 				isPlaying = false;
 				elementSelected = false;
 				songName.setText("");
 				playBtn.setBackgroundResource(R.drawable.ic_play);
-				contScanTask.stop();
+				if(contScanTask != null) {
+					contScanTask.stop();
+				}
 			}
 		});
 
@@ -110,7 +118,6 @@ public class MusicFragment extends Fragment {
 				int idElt = ConnectFragment.audios.getListId().get(position);
 				String artiste = ConnectFragment.audios.getListArtistes().get(position);
 				new PlayTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, MainActivity.RASPI_ADDRESS,artiste,""+idElt);
-				//new PlayTask().execute(MainActivity.RASPI_ADDRESS,artiste,""+idElt);
 				contScanTask = new ContiniousScanTask(getActivity(), MusicFragment.this);
 				contScanTask.execute();
 			}

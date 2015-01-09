@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import info.androidhive.slidingmenu.MainActivity;
 import info.androidhive.slidingmenu.R;
 import info.androidhive.slidingmenu.model.Audios;
-import info.androidhive.slidingmenu.model.Videos;
 import info.androidhive.slidingmenu.tasks.GetMedia;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -25,12 +24,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class ConnectFragment extends Fragment { 	
-	View rootView;
-	String scanList;
+public class ConnectFragment extends Fragment { 
+	
+	private View rootView;
 	
 	public static Audios audios = null;
-	public static Videos videos = null;
 	
 	public static String btName = "";
 
@@ -98,9 +96,6 @@ public class ConnectFragment extends Fragment {
 			ArrayList<String> listArtistes = new ArrayList<String>();
 			ArrayList<Integer> listId = new ArrayList<Integer>();
 			
-			ArrayList<String> listVideoTitles = new ArrayList<String>();
-			ArrayList<Integer> listVideoIds = new ArrayList<Integer>();
-			
 			JSONArray audio = (JSONArray) jsonResultat.getJSONArray("audio");
 			for (int i = 0; i < audio.length(); i++) {
 				JSONObject chanson = audio.getJSONObject(i);
@@ -113,17 +108,6 @@ public class ConnectFragment extends Fragment {
 			}
 			
 			audios = new Audios(listChansons, listArtistes, listId);
-
-//			JSONArray videoJSONObj = (JSONArray) jsonResultat.getJSONArray("video");
-//			for (int i = 0; i < videoJSONObj.length(); i++) {
-//				JSONObject video = videoJSONObj.getJSONObject(i);
-//				String titre = video.getString("title");
-//				int id = video.getInt("id");
-//				listVideoTitles.add(titre);
-//				listVideoIds.add(id);
-//			}
-//			
-//			videos = new Videos(listVideoTitles, listVideoIds);
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

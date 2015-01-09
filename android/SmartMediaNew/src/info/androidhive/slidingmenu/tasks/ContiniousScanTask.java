@@ -1,11 +1,8 @@
 package info.androidhive.slidingmenu.tasks;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
-
 import info.androidhive.slidingmenu.MainActivity;
 import info.androidhive.slidingmenu.fragments.ConnectFragment;
 import info.androidhive.slidingmenu.fragments.MusicFragment;
@@ -17,7 +14,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 public class ContiniousScanTask extends AsyncTask<String, Void, Void> {
 	
@@ -36,7 +32,7 @@ public class ContiniousScanTask extends AsyncTask<String, Void, Void> {
     
     private boolean btScanDone = true;
     
-    final BroadcastReceiver blueToothReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver blueToothReceiver = new BroadcastReceiver() {
 		
 		private short firstPower = Short.MIN_VALUE;
 		
@@ -167,7 +163,11 @@ public class ContiniousScanTask extends AsyncTask<String, Void, Void> {
 	
 	
 	public void stop() {
-        mainContext.unregisterReceiver(blueToothReceiver);
+		try {
+	        mainContext.unregisterReceiver(blueToothReceiver);
+		} catch(IllegalArgumentException e) {
+			Log.e("Continious Scan","Receiver not registred");
+		}
 		this.continu = false;
 	}
 
